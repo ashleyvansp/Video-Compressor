@@ -1,6 +1,5 @@
-Video Compression Program
-Ashley Van Spankeren
-V00865956
+# Video Compression Program
+Author: Ashley Van Spankeren
 
 Description
 -----------
@@ -50,18 +49,19 @@ Bitstream
 -----------
 The first 64 bits convey the height and width of the frame (each using 32 bits).
 Next, 2 bits are used to convey the quality of the stream:
-    * 00 --> low
-    * 01 --> medium
-    * 10 --> high
+* 00 --> low
+* 01 --> medium
+* 10 --> high
+
 Each frame is then encoded as follows:
-    * A byte of value 1 is pushed at the start to signal that the stream has not finished. 
-    * The Y plane is encoded first, followed by the Cb then Cr planes.
-    * Each plane is encoded in 8x8 blocks.
-    * For P-frames, the sign of the first pixel (ie. (0,0)) is encoded in 1 bit (0 for negative, 1 otherwise). Next, the motion code is encoded using 2 bits (as described above).
-    * For both I-frames and P-frames, the first pixel of each block (ie (0,0)) is encoded using 16 bits representing the absolute value.
-    * Every following pixel is encoded as its difference from the previous pixel:
-        * Differences of 0 are simply represented by a single 0 bit
-        * For nonzero values, the sign is pushed first using two bits (10 for positive, 11 for negative) followed by the unary representation of the absolute value (terminated with a 0 to indicate the stop)
+* A byte of value 1 is pushed at the start to signal that the stream has not finished. 
+* The Y plane is encoded first, followed by the Cb then Cr planes.
+* Each plane is encoded in 8x8 blocks.
+* For P-frames, the sign of the first pixel (ie. (0,0)) is encoded in 1 bit (0 for negative, 1 otherwise). Next, the motion code is encoded using 2 bits (as described above).
+* For both I-frames and P-frames, the first pixel of each block (ie (0,0)) is encoded using 16 bits representing the absolute value.
+* Every following pixel is encoded as its difference from the previous pixel:
+  * Differences of 0 are simply represented by a single 0 bit
+  * For nonzero values, the sign is pushed first using two bits (10 for positive, 11 for negative) followed by the unary representation of the absolute value (terminated with a 0 to indicate the stop)
 Finally, a 0 byte is pushed to indicate the end of the stream.
     
 
